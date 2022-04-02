@@ -9,31 +9,79 @@ int main() {
 	string cmd;
 
 	while (cin >> cmd) {
-		
-		// first player
-		string firstPlayer;
-		cin >> firstPlayer;
-		
-		// Ask user what they would like for player 1
-		cin << "Input type for player 1:" << endl;
+		string pWhite, pBlack;
 
-		// check what "kind" of player they are
-		if (firstPlayer == "human") {
+		if (cmd == "game") {
+			bool invalid = false;
 
-		} else if (firstPlayer == "computer") {
+			cin >> pWhite >> pBlack;
+
+			// white player
+			if (pWhite == "human") {
+				//TODO
+			} 
+			else if (pWhite == "computer1") {
+				//TODO
+			}
+			else if (pWhite == "computer2") {
+				//TODO
+			} 
+			else { invalid = true; }
+
+			// black player
+			if (pBlack == "human") {
+				//TODO
+			} 
+			else if (pBlack == "computer1") {
+				//TODO
+			}
+			else if (pBlack == "computer2") {
+				//TODO
+			}
+			else { invalid = true; }
+			
+			if (!invalid) {
+				// TODO create a new game 
+				// TODO display the game (to text, graphic)
+			}
 
 		}
+		else if (cmd == "resign") {
+			//TODO
+		}
+		else if (cmd == "move") {
+			string pos1, pos2;
+			cin >> pos1 >> pos2;
+			//TODO determine whose move it is
+			//TODO actually moving pieces
+			//TODO update and display the game
 
-		// second player (repeat same stuff as player 1)
-		string secondPlayer;
-		cin >> secondPlayer;
+		}
+		else if (cmd == "setup") {
+			bool inGame; //TODO assign function to return game in progress
 
-		cin << "Input type for player 2:" << endl;
-		if (secondPlayer == "human") {
-		
-		} else if (secondPlayer == "computer") {
-		
+			if (!inGame) {
+				string cmdSetup;
+				while (cin >> cmdSetup) {
+					if (cmdSetup == "+") {
+						//TODO
+					}
+					else if (cmdSetup == "-") {
+						//TODO
+					}
+					else if (cmdSetup == "=") {
+						//TODO
+					}
+					else if (cmdSetup == "done") {
+						//TODO
+					}
+
+				}
+			}
 		}
 
 	}
+
+	// TODO print final score
+	// free any allocated memory
 }
