@@ -1,12 +1,17 @@
 #include "game.h"
 #include "board.h"
+#include "subject.h"
 #include <utility>
 
 using namespace std;
 
 void Game::start() {}
 
-char getState(int x, int y) { return 0; } // returns piece at pos(x, y)
+char Game::getState(int x, int y) const { return 0; } // returns piece at pos(x, y)
+
+void Game::setpWhite(shared_ptr<Player> player1) { pWhite = player1; }
+
+void Game::setpBlack(shared_ptr<Player> player2) { pBlack = player2; }
 
 shared_ptr<Board> Game::getBoard() { return nullptr; }
 
