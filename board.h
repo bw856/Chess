@@ -1,15 +1,16 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
-#include "piece.h"
+#include <utility>
 #include <vector>
 
 class Board {
-	vector<int, int> squares;
+	std::vector<std::vector<shared_ptr<Piece>>> squares;
 	public:
 	Board();
-	*Piece getPiece(int posX, int posY);
-	void setPiece(Piece *p, int posX, int posY);
-	void movePiece(Piece *p, int posX, int posY, int newX, int newY);
+	void getPiece(std::pair<int, int> coords);
+	void setPiece(/* piece */ std::pair<int, int> coords);
+	void movePiece(/* piece */ std::pair<int, int> coords, std::pair<int, int> new_coords);
 	void clear();
+	~Board();
 };
