@@ -2,9 +2,9 @@
 #define _OBSERVER_H_
 
 class Observer {
- public:
-  virtual void notify() = 0;
-  virtual ~Observer();
+	public:
+		virtual void notify() = 0;
+		virtual ~Observer();
 };
 
 #endif
