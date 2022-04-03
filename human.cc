@@ -4,6 +4,6 @@
 
 using namespace std;
 
-Human::Human(string color, string type): Player{color, "Human"} {}
+Human::Human(string color): Player{color, "Human"} {}
 
 Human::~Human() {}

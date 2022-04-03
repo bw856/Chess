@@ -8,8 +8,9 @@
 #include <string> // remove this later
 
 class Game : public Subject {
-	std::unique_ptr<Player> pWhite;
-	std::unique_ptr<Player> pBlack;
+	Game();
+	std::shared_ptr<Player> pWhite;
+	std::shared_ptr<Player> pBlack;
 	std::shared_ptr<Board> board;
 	int scoreWhite = 0;
 	int scoreBlack = 0;
@@ -18,7 +19,10 @@ class Game : public Subject {
 	public:
 	void start();
 	std::shared_ptr<Board> getBoard();
+	void setpWhite(std::shared_ptr<Player> pwhite);
+	void setpBlack(std::shared_ptr<Player> pblack);
 	char getState(int x, int y) const;
+	std::shared_ptr<Board> getBoard();
 	void winner();
 	void getTurn();
 	void nextTurn();
