@@ -6,7 +6,7 @@ using namespace std;
 
 void Game::start() {}
 
-// char getState(int x, int y) { return 0; }
+char getState(int x, int y) { return 0; } // returns piece at pos(x, y)
 
 shared_ptr<Board> Game::getBoard() { return nullptr; }
 

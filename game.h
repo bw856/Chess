@@ -4,7 +4,7 @@
 #include "board.h"
 #include <utility>
 
-class Game {
+class Game : public Subject {
 	std::unique_ptr<Player> pWhite;
 	std::unique_ptr<Player> pBlack;
 	std::shared_ptr<Board> board;
@@ -15,6 +15,7 @@ class Game {
 	public:
 	void start();
 	std::shared_ptr<Board> getBoard();
+	char getState(int x, int y) const;
 	void winner();
 	void getTurn();
 	void nextTurn();
