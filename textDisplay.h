@@ -1,5 +1,5 @@
-#ifndef _OBSERVER_H_
-#define _OBSERVER_H_
+#ifndef _TEXTDISPLAY_H_
+#define _TEXTDISPLAY_H_
 
 #include <memory>
 

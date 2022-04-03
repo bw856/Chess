@@ -5,6 +5,7 @@
 #include <string>
 
 class Human : public Player {
+	public:
 	Human(std::string color);
 	~Human();
 };

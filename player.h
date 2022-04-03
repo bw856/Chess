@@ -10,7 +10,7 @@ class Player {
 	Player(std::string color, std::string type);
 	std::string getColor();
 	std::string getType();
-	~Player();
+	virtual ~Player();
 };
 
 #endif

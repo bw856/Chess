@@ -10,4 +10,3 @@ string Player::getColor() { return color; }
 string Player::getType() { return type; }
 
 Player::~Player() {}
-
