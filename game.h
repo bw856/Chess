@@ -2,7 +2,7 @@
 #define __GAME_H__
 
 #include "board.h"
-//#include "subject.h"
+#include "subject.h"
 #include "player.h"
 #include <utility>
 #include <string> // remove this later
@@ -17,7 +17,6 @@ class Game : public Subject {
 	std::string turn = "white"; // white is the "first" player to move
 	public:
 	void start();
-	//char getState(int x, int y) const;
 	std::shared_ptr<Board> getBoard();
 	char getState(int x, int y) const;
 	void winner();

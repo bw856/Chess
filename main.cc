@@ -2,47 +2,51 @@
 #include <utility>
 #include <string>
 
+#include "game.h"
+#include "board.h"
+#include "human.h"
+
 using namespace std;
 
 int main() {
-	// command
-	string cmd;
+	shared_ptr<Game> game;
+	vector<shared_ptr<Observer>> displays;
 
+	// command interpreter
+	string cmd;
 	while (cin >> cmd) {
-		string pWhite, pBlack;
 
 		if (cmd == "game") {
-			bool invalid = false;
+			Game createGame = make_shared<Game>();
 
+			string pWhite, pBlack;
+			bool invalid = false;
 			cin >> pWhite >> pBlack;
 
 			// white player
 			if (pWhite == "human") {
-				//TODO
+				game->setpWhite(make_shared<Human>("white"));
 			} 
 			else if (pWhite == "computer1") {
 				//TODO
 			}
-			else if (pWhite == "computer2") {
-				//TODO
-			} 
 			else { invalid = true; }
 
 			// black player
 			if (pBlack == "human") {
-				//TODO
+				game->setpBlack(make_shared<Human>("black"));
 			} 
 			else if (pBlack == "computer1") {
 				//TODO
 			}
-			else if (pBlack == "computer2") {
-				//TODO
-			}
 			else { invalid = true; }
 
+			// no invalid players > create a new game
 			if (!invalid) {
-				// TODO create a new game 
-				// TODO display the game (to text, graphic)
+				game = createGame;
+				displays.emplace_back(make_shared<TextDisplay>(game));
+				// TODO display game to graphical
+				game->displayGame();
 			}
 
 		}

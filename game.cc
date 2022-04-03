@@ -18,4 +18,4 @@ void Game::nextTurn() {}
 
 void Game::updateOutput() {}
 
-void Game::displayGame() {}
+void Game::displayGame() { notifyObservers(); }
