@@ -39,7 +39,7 @@ int main() {
 				//TODO
 			}
 			else { invalid = true; }
-			
+
 			if (!invalid) {
 				// TODO create a new game 
 				// TODO display the game (to text, graphic)
