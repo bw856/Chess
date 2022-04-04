@@ -9,10 +9,11 @@
 #include <string> 
 
 class Player;
+class Human;
 
 class Game : public Subject {
-	std::shared_ptr<Player> pWhite;
-	std::shared_ptr<Player> pBlack;
+	std::shared_ptr<Player> pWhite = nullptr; // later assigned with set functions
+	std::shared_ptr<Player> pBlack = nullptr;
 	int scoreWhite = 0;
 	int scoreBlack = 0;
 	std::shared_ptr<Board> board;

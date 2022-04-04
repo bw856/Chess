@@ -1,10 +1,12 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include <memory>
 
 #include "game.h"
 #include "board.h"
 #include "human.h"
+#include "player.h"
 #include "observer.h"
 #include "textDisplay.h"
 #include "graphicDisplay.h"
@@ -25,31 +27,27 @@ int main() {
 			string pWhite, pBlack;
 			bool invalid = false;
 			cin >> pWhite >> pBlack;
-			
+
 			cout << "after getting players" << endl;
 
 			// white player
 			if (pWhite == "human") {
-				game->setpWhite(make_shared<Human>("white")); //TODO this does not work
+				createGame->setpWhite(make_shared<Human>("white")); //TODO this does not work
 			} 
 			else if (pWhite == "computer1") {
 				//TODO
 			}
 			else { invalid = true; }
-			
-			cout << "got white player" << endl;			
 
 			// black player
 			if (pBlack == "human") {
-				game->setpBlack(make_shared<Human>("black"));
+				createGame->setpBlack(make_shared<Human>("black"));
 			} 
 			else if (pBlack == "computer1") {
 				//TODO
 			}
 			else { invalid = true; }
-			
-			cout << "before invalid check" << endl;
-	
+
 			// no invalid players > create a new game
 			if (!invalid) {
 				game = createGame;

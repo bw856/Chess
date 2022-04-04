@@ -3,10 +3,10 @@
 
 using namespace std;
 
-Player::Player(string color, string type): color{color}, type{type} {}
-
-string Player::getColor() { return color; }
+Player::Player(string type, string color): type{type}, color{color} {}
 
 string Player::getType() { return type; }
+
+string Player::getColor() { return color; }
 
 Player::~Player() {}

@@ -4,12 +4,13 @@
 #include <string>
 
 class Player {
-	std::string color;
 	std::string type;
+	protected:
+	std::string color;
 	public:
-	Player(std::string color, std::string type);
-	std::string getColor();
+	Player(std::string type, std::string color);
 	std::string getType();
+	std::string getColor();
 	virtual ~Player();
 };
 

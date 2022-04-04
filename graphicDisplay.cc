@@ -20,7 +20,7 @@ GraphicDisplay::~GraphicDisplay() {}
 
 void GraphicDisplay::notify() {
 	cout << "enter graphic notify" << endl; //TODO remove this
-	xwindow->fillRectangle(10, 10, 40, 40, Xwindow::Black);
+	/*xwindow->fillRectangle(10, 10, 40, 40, Xwindow::Black);
 	xwindow->fillRectangle(50, 10, 40, 40, Xwindow::Red);
 	xwindow->fillRectangle(90, 10, 40, 40, Xwindow::Green);
 	xwindow->fillRectangle(130, 10, 40, 40, Xwindow::Blue);
@@ -29,6 +29,7 @@ void GraphicDisplay::notify() {
 	xwindow->fillRectangle(250, 10, 40, 40, Xwindow::Magenta);
 	xwindow->fillRectangle(290, 10, 40, 40, Xwindow::Orange);
 	xwindow->fillRectangle(290, 10, 40, 40, Xwindow::Brown);
+	*/
 	// 	iterate rows (top to bottom)
 	// 	and for each row, iterate columns (left to right)
 	for (int row = 0; row < 8; ++row) {
