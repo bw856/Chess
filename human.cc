@@ -1,4 +1,3 @@
-#include "player.h"
 #include "human.h"
 #include <string>
 
