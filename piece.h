@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+class MoveVisitor;
 class Board;
 
 class Piece {
@@ -17,7 +18,7 @@ class Piece {
 	std::pair<int, int> getPosition();
 	std::string getType();
 	// add move visitor class and ptr later
-	virtual void acceptMove(std::string MoveVisitor, std::pair<int, int> coords) = 0;
+	virtual void acceptMove(MoveVisitor &v, std::pair<int, int> coords) = 0;
 	virtual ~Piece();
 };
 
