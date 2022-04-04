@@ -18,22 +18,20 @@ void TextDisplay::notify() {
 	for (int row = 8; row > 0; --row) {
 		cout << row << " "; // print row number followed by space
 
-		char piece;
 		bool evenRow = (row % 2 == 0) ? true : false;
 
 		for (int col = 0; col < 8; ++col) { 
-			piece = subject->getState(row - 1, col);
-			if (piece != 0) {
-				cout << piece; // print piece
+			//char piece = subject->getState(row - 1, col);
+			if (row == 8 || row == 7 || row == 2 || row == 1) {
+			//if (piece != 0) {
+				cout << 'K'; // print piece
 			}
 			else {
 				// black square = hyphen
 				// white square = blank
 				bool evenCol = (col % 2 == 0) ? true : false;
-				if (evenRow && evenCol) { cout << " "; } 
-				else if (evenRow && !evenCol) { cout << "-"; }
-				else if (!evenRow && evenCol) { cout << "-"; }
-				else if (!evenRow && !evenCol) { cout << " "; }
+				if 		((evenRow && evenCol) || (!evenRow && !evenCol)) { cout << " "; } 
+				else if ((evenRow && !evenCol) || (!evenRow && evenCol)) { cout << "-"; }
 			}
 		}
 		cout << endl; // end of row, newline

@@ -7,6 +7,7 @@
 #include "human.h"
 #include "observer.h"
 #include "textDisplay.h"
+#include "graphicDisplay.h"
 
 using namespace std;
 
@@ -53,7 +54,7 @@ int main() {
 			if (!invalid) {
 				game = createGame;
 				displays.emplace_back(make_shared<TextDisplay>(game));
-				// TODO display game to graphical
+				//displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->displayGame();
 			}
 
