@@ -9,6 +9,7 @@
 #include <memory>
 
 class Queen : public Piece {
+	public:
 	Queen(std::string color, std::string type);
 	std::vector<std::pair<int,int>> validMoves(std::pair<int,int> coords, Board &b);
 	void acceptMove(MoveVisitor &v, std::pair<int,int> coords);

@@ -7,7 +7,7 @@
 class Piece;
 
 class Board {
-	std::vector<std::vector<std::shared_ptr<char>>> squares;
+	std::vector<std::vector<std::shared_ptr<Piece>>> squares;
 	public:
 	Board();
 	std::shared_ptr<Piece> getPiece(std::pair<int, int> coords);
