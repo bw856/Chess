@@ -45,7 +45,7 @@ vector<pair<int,int>> King::validMoves(pair<int,int> coords, Board &board) {
 	}
 
 	if (down.first >= 0 && down.first <= 7 && down.second >= 0 && down.second <= 7) {
-		shared_ptr<Piece> p = board.getPiece(upRight);
+		shared_ptr<Piece> p = board.getPiece(down);
 		if (p->getType() == "Blank" || (p->getColor() != this->getColor() && p->getColor() != "nocolor")) {
 			kingMoves.emplace_back(down);
 		}
