@@ -12,7 +12,7 @@ class Board {
 	Board();
 	std::shared_ptr<Piece> getPiece(std::pair<int, int> coords);
 	void setPiece(std::shared_ptr<Piece> p, std::pair<int, int> coords);
-	void movePiece(std::shared_ptr<Piece> p, std::pair<int, int> coords, std::pair<int, int> new_coords);
+	bool movePiece(std::shared_ptr<Piece> p, std::pair<int, int> coords, std::pair<int, int> new_coords);
 	void clear();
 	~Board();
 };

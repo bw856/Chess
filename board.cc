@@ -58,7 +58,7 @@ shared_ptr<Piece> Board::getPiece(pair<int,int> coords) { return squares[coords.
 
 void Board::setPiece(shared_ptr<Piece> p, pair<int,int> coords) { squares[coords.first][coords.second] = p; };
 
-void Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> new_coords) {
+bool Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> new_coords) {
 
 	if (p->getType() != "Blank") {
 		bool new_coords_true = false;
@@ -82,8 +82,12 @@ void Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> 
 
 			// set the old coords to be "Blank" piece
 			this->setPiece(make_shared<Blank>(), coords);
+
+			// return true because the piece is now moved to new_coords
+			return true;
 		}
 	}
+	return false;
 }
 
 void Board::clear() {
