@@ -21,10 +21,9 @@ void TextDisplay::notify() {
 		bool evenRow = (row % 2 == 0) ? true : false;
 
 		for (int col = 0; col < 8; ++col) { 
-			//char piece = subject->getState(row - 1, col);
-			if (row == 8 || row == 7 || row == 2 || row == 1) {
-			//if (piece != 0) {
-				cout << 'K'; // print piece
+			string piece = subject->getState(col, row - 1);
+			if (piece != "Blank") {
+				cout << piece; // print piece
 			}
 			else {
 				// black square = hyphen

@@ -14,23 +14,30 @@ class Human;
 class Game : public Subject {
 	std::shared_ptr<Player> pWhite = nullptr; // later assigned with set functions
 	std::shared_ptr<Player> pBlack = nullptr;
-	int scoreWhite = 0;
-	int scoreBlack = 0;
+	double scoreWhite = 0;
+	double scoreBlack = 0;
 	std::shared_ptr<Board> board;
 	bool inProgress = false;
 	std::string turn = "white"; // white is the "first" player to move
+	
 	public:
 	Game();
 	void start();
+	bool started() const;
+	std::shared_ptr<Board> getBoard() const;
+	void resetBoard();
 	void setpWhite(std::shared_ptr<Player> player1);
 	void setpBlack(std::shared_ptr<Player> player2);
-	char getState(int x, int y) const;
-	std::shared_ptr<Board> getBoard();
-	void winner();
-	void getTurn();
-	void nextTurn();
+	std::shared_ptr<Player> getpWhite() const;
+	std::shared_ptr<Player> getpBlack() const;
+	std::string getTurn() const;
+	std::string nextTurn();	
+	std::string getState(int x, int y) const;
+	void victor(std::string winner);
 	void updateOutput();
-	void displayGame();
+	// TODO include functions to determine state of game: check, stalemate, checkmate
+	void display();
+	void printScore();
 };
 
 #endif

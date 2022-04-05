@@ -13,7 +13,7 @@
 
 using namespace std;
 
-Board::Board() {
+Board::Board(): squares{8, std::vector<std::shared_ptr<Piece>>(8)} {
 	const int BOARD_LIMIT = 7;
 
 	// initialize every position in the board to be a "blank" piece

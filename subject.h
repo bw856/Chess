@@ -13,7 +13,7 @@ class Subject {
 	virtual ~Subject();
 	void attach(std::shared_ptr<Observer> o);
 	void detach(std::shared_ptr<Observer> o);
-	virtual char getState(int x, int y) const = 0; // returns piece at pos(x, y)
+	virtual std::string getState(int x, int y) const = 0; // returns piece at pos(x, y)
 	void notifyObservers();
 };
 

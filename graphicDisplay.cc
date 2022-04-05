@@ -54,12 +54,12 @@ void GraphicDisplay::notify() {
 	// 	void drawString(int x, int y, std::string msg)
 	for (int row = 0; row < 8; ++row) {
 		for (int col = 0; col < 8; ++col) {
-			//TODO//char piece = subject->getState(row, col);
-			//if (piece != 0) {
-				string letter = "";
-				letter.push_back('K'); // convert char to string to draw
-				xwindow->drawString((col+1)*SIZE + 32, (row*SIZE) + 77, letter);
-			//}	
+			string piece = subject->getState(col, row);
+			if (piece != "Blank") {
+				//string letter = "";
+				//letter.push_back('K'); // convert char to string to draw
+				xwindow->drawString((col+1)*SIZE + 32, (row*SIZE) + 77, piece);
+			}	
 		}
 	}
 	cout << "pieces displayed to graphic" << endl; // TODO remove this

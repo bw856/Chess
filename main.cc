@@ -20,60 +20,102 @@ int main() {
 	// command interpreter
 	string cmd;
 	while (cin >> cmd) {
-
 		if (cmd == "game") {
+			cout << "enter game cmd" << endl;
 			auto createGame = make_shared<Game>();
 
 			string pWhite, pBlack;
 			bool invalid = false;
 			cin >> pWhite >> pBlack;
 
-			cout << "after getting players" << endl;
-
+			cout << "before assigning players" << endl;
 			// white player
 			if (pWhite == "human") {
-				createGame->setpWhite(make_shared<Human>("white")); //TODO this does not work
+				createGame->setpWhite(make_shared<Human>("white"));
 			} 
-			else if (pWhite == "computer1") {
-				//TODO
-			}
 			else { invalid = true; }
 
 			// black player
 			if (pBlack == "human") {
 				createGame->setpBlack(make_shared<Human>("black"));
 			} 
-			else if (pBlack == "computer1") {
-				//TODO
-			}
 			else { invalid = true; }
 
-			// no invalid players > create a new game
+			cout << "assigned players" << endl;
+			// no invalid players > create and start a new game
 			if (!invalid) {
 				game = createGame;
+				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
 				//displays.emplace_back(make_shared<GraphicDisplay>(game));
-				game->displayGame();
+				game->display();
 			}
 
-			cout << "end of game command" << endl;
+			cout << "end of game command" << endl; //TODO remove this
 
 		}
 		else if (cmd == "resign") {
-			//TODO
+			if (game->getTurn() == "white") { game->victor("black"); }
+			else if (game->getTurn() == "black") { game->victor("white"); }
 		}
 		else if (cmd == "move") {
+			bool invalid = false;
 			string pos1, pos2;
 			cin >> pos1 >> pos2;
-			//TODO determine whose move it is
-			//TODO actually moving pieces
-			//TODO update and display the game
+			pair<int, int> start, end;
+
+			if ((pos1.length() == 2) && (pos2.length() == 2)) { 
+				int c1 = pos1.front() - 'a';
+				int r1 = pos1.back() - '1';
+				int c2 = pos2.front() - 'a';
+				int r2 = pos2.back() - '1';
+				if ((0 <= c1 && c1 <= 7) || (0 <= r1 && r1 <= 7) || (0 <= c2 && c2 <= 7) || (0 <= r2 && r2 <= 7)) {  
+					start = make_pair(c1, r1);
+					end = make_pair(c2, r2);
+				}
+				else { invalid = true; }
+			}
+			else { invalid = true; }
+
+			if (invalid) { 
+				cout << "Invalid Move." << endl; 
+				continue;
+			}
+
+			string turn = game->getTurn();
+			auto piece = game->getBoard()->getPiece(start);
+			if (piece->getColor() == turn) { // check if moving player's corresponding piece
+				// move piece, return true if successful
+				bool validMove = game->getBoard()->movePiece(piece, start, end);
+				if (validMove) {
+					//TODO check for pawn promotion
+
+					/*//TODO determines if check, checkmate, stalemate
+					string status = game->getStatus(); 
+					if (status == turn) { board->undoMove(); } // TODO putting self in check
+					else {
+						game->display();
+
+						if (status == "white") { game->victor("white"); }
+						else if (status == "black") { game->victor("black"); }
+						else if (status == "stalemate") { game->victor("tie"); }
+						game->nextTurn();
+					}*/ 
+					game->nextTurn(); //remove this later
+				}
+				else {
+					cout << "Invalid Move." << endl;
+				}
+			}
+			else {
+				cout << "Invalid Move. Cannot move opposing piece." << endl;
+
+			}
 
 		}
 		else if (cmd == "setup") {
-			bool inGame = false; //TODO assign function to return game in progress
-
-			if (!inGame) {
+			if (!game->started()) {
+				//TODO add pieces, figure out which person plays which color side
 				string cmdSetup;
 				while (cin >> cmdSetup) {
 					if (cmdSetup == "+") {
@@ -94,7 +136,6 @@ int main() {
 		}
 
 	}
-
-	// TODO print final score
-	// free any allocated memory
+	game->printScore();
+	// TODO free any allocated memory?
 }
