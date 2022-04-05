@@ -92,7 +92,7 @@ vector<pair<int,int>> Rook::validMoves(pair<int,int> coords, Board &board) {
 			}
 		}
 	}
-	
+	++moves;
 	return rookMoves;
 }
 

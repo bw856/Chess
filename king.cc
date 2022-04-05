@@ -78,6 +78,7 @@ vector<pair<int,int>> King::validMoves(pair<int,int> coords, Board &board) {
 			kingMoves.emplace_back(left);
 		}
 	}
+	++moves;
 	return kingMoves;
 }
 
