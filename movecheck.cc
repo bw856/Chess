@@ -33,8 +33,8 @@ void MoveCheck::move(Queen &queen, pair<int,int> coords) {
 	for (pair<int,int> move_coords : validMoves) {
 		shared_ptr<Piece> p = board.getPiece(move_coords);
 
-		if ((p->getType() == "Q" && p->getColor() != queen.getColor()) || (p->getType() == "q" && p->getColor() != queen.getColor())) {
-			check = (p->getType() == "Q") ? "white" : "black";
+		if ((p->getType() == "K" && p->getColor() != queen.getColor()) || (p->getType() == "k" && p->getColor() != queen.getColor())) {
+			check = (p->getType() == "K") ? "white" : "black";
 		}
 	}
 } 
@@ -45,8 +45,8 @@ void MoveCheck::move(Bishop &bishop, pair<int,int> coords) {
 	for (pair<int,int> move_coords : validMoves) {
 		shared_ptr<Piece> p = board.getPiece(move_coords);
 
-		if ((p->getType() == "B" && p->getColor() != bishop.getColor()) || (p->getType() == "b" && p->getColor() != bishop.getColor())) {
-			check = (p->getType() == "B") ? "white" : "black";
+		if ((p->getType() == "K" && p->getColor() != bishop.getColor()) || (p->getType() == "k" && p->getColor() != bishop.getColor())) {
+			check = (p->getType() == "K") ? "white" : "black";
 		}
 	}
 }
@@ -57,8 +57,8 @@ void MoveCheck::move(Knight &knight, pair<int,int> coords) {
 	for (pair<int,int> move_coords : validMoves) {
 		shared_ptr<Piece> p = board.getPiece(move_coords);
 
-		if ((p->getType() == "N" && p->getColor() != knight.getColor()) || (p->getType() == "n" && p->getColor() != knight.getColor())) {
-			check = (p->getType() == "N") ? "white" : "black";
+		if ((p->getType() == "K" && p->getColor() != knight.getColor()) || (p->getType() == "k" && p->getColor() != knight.getColor())) {
+			check = (p->getType() == "K") ? "white" : "black";
 		}
 	}
 }
@@ -69,8 +69,8 @@ void MoveCheck::move(Rook &rook, pair<int,int> coords) {
 	for (pair<int,int> move_coords : validMoves) {
 		shared_ptr<Piece> p = board.getPiece(move_coords);
 
-		if ((p->getType() == "R" && p->getColor() != rook.getColor()) || (p->getType() == "r" && p->getColor() != rook.getColor())) {
-			check = (p->getType() == "R") ? "white" : "black";
+		if ((p->getType() == "K" && p->getColor() != rook.getColor()) || (p->getType() == "k" && p->getColor() != rook.getColor())) {
+			check = (p->getType() == "K") ? "white" : "black";
 		}
 	}
 }
@@ -81,8 +81,8 @@ void MoveCheck::move(Pawn &pawn, pair<int,int> coords) {
 	for (pair<int,int> move_coords : validMoves) {
 		shared_ptr<Piece> p = board.getPiece(move_coords);
 
-		if ((p->getType() == "P" && p->getColor() != pawn.getColor()) || (p->getType() == "p" && p->getColor() != pawn.getColor())) {
-			check = (p->getType() == "P") ? "white" : "black";
+		if ((p->getType() == "K" && p->getColor() != pawn.getColor()) || (p->getType() == "k" && p->getColor() != pawn.getColor())) {
+			check = (p->getType() == "K") ? "white" : "black";
 		}
 	}
 }

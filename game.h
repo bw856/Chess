@@ -36,7 +36,8 @@ class Game : public Subject {
 	std::shared_ptr<Player> getpWhite() const;
 	std::shared_ptr<Player> getpBlack() const;
 	std::string getTurn() const;
-	std::string nextTurn();	
+	std::string nextTurn();
+	void resetStatus();
 	void updateStatus();
 	std::string getStatus() const;
 	std::string check();

@@ -13,7 +13,11 @@ using namespace std;
 
 Game::Game(): board{make_shared<Board>()} {}
 
-void Game::start() { inProgress = true; }
+void Game::start() { 
+	inProgress = true; 
+	resetStatus();
+}
+
 
 bool Game::started() const { return inProgress; } 
 
@@ -41,6 +45,7 @@ string Game::nextTurn() {
 	return (turn = (turn == "white") ? "black" : "white");
 }
 
+void Game::resetStatus() { status = "none"; }
 
 void Game::updateStatus() {
 	string inCheck = check();
@@ -53,7 +58,7 @@ void Game::updateStatus() {
 string Game:: getStatus() const { return status; }
 
 string Game::check() {
-	MoveCheck anyChecks(*board.get());
+	MoveCheck anyChecks(*board);
 	string inCheck = "none";
 	for (int col = 0; col < 8; ++col) {
 		for (int row = 0; row < 8; ++row) {
@@ -71,7 +76,7 @@ string Game::checkmate() {
 }
 
 bool Game::stalemate() {
-	MoveStalemate anyChecks(*board.get());
+	MoveStalemate anyChecks(*board);
 	bool inStalemate;
 	for (int col = 0; col < 8; ++col) {
 		for (int row = 0; row < 8; ++row) {

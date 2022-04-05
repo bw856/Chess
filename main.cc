@@ -101,7 +101,7 @@ int main() {
 				// move piece, return true if successful
 				bool validMove = game->getBoard()->movePiece(piece, start, end);
 				if (validMove) {
-
+					cout << "inside validMove" << endl; // TODO: remove this
 					// check for pawn promotion
 					bool pawnPromotion = false;
 					pair<int,int> pawnCoords;
@@ -150,14 +150,18 @@ int main() {
 						else {
 							cout << "Invalid Promotion." << endl;
 							game->getBoard()->undoMove();
+							game->resetStatus();
 						}
 					}
 
 					//TODO determines if check, checkmate, stalemate
 					game->updateStatus();
 					string status = game->getStatus(); 
+					cout << "status: " << status << endl;
 					if (status == turn) { // TODO putting self in check
-						game->getBoard()->undoMove(); 
+						cout << "invalid: putting self in check" << endl;
+						game->getBoard()->undoMove();
+						game->resetStatus();
 					}
 					else {
 						game->display();
@@ -341,9 +345,9 @@ int main() {
 					}
 
 					// TODO verify kings are not checked
-					/*string status = game->getStatus(); 
+					game->updateStatus();
+					string status = game->getStatus(); 
 					  if (status == "white" || status == "black") { inCheck = true; }
-					 */
 
 					// verify all requirements are reached, otherwise displays error message
 					if (whiteKingCount == 1 && blackKingCount == 1 && pawnsVerified && !inCheck) {
@@ -355,6 +359,7 @@ int main() {
 						break;
 					} 
 					else {
+						cout << "status: " << status << endl; //TODO
 						cout << "Cannot exit setup, following errors have occurred:" << endl;
 						if (whiteKingCount != 1 || blackKingCount != 1) {
 							cout << "Need exactly one of each king." << endl;
