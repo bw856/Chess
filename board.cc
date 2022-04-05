@@ -50,7 +50,7 @@ Board::Board(): squares{8, std::vector<std::shared_ptr<Piece>>(8)} {
 
 	// set up pawns for white
 	for (int i = 0; i <= BOARD_LIMIT; i++) {
-		squares[i][7] = make_shared<Pawn>("black", "p");
+		squares[i][6] = make_shared<Pawn>("black", "p");
 	}
 }
 
