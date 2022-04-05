@@ -47,7 +47,7 @@ int main() {
 				game = createGame;
 				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
-				//displays.emplace_back(make_shared<GraphicDisplay>(game));
+			//	displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
 
@@ -100,7 +100,8 @@ int main() {
 						else if (status == "black") { game->victor("black"); }
 						else if (status == "stalemate") { game->victor("tie"); }
 						game->nextTurn();
-					}*/ 
+					}*/
+					game->display(); // remove this later
 					game->nextTurn(); //remove this later
 				}
 				else {

@@ -58,7 +58,7 @@ void GraphicDisplay::notify() {
 			if (piece != "Blank") {
 				//string letter = "";
 				//letter.push_back('K'); // convert char to string to draw
-				xwindow->drawString((col+1)*SIZE + 32, (row*SIZE) + 77, piece);
+				xwindow->drawString((col+1)*SIZE + 32, ((5-row)*SIZE) + 175, piece);
 			}	
 		}
 	}
