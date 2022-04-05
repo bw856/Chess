@@ -5,6 +5,9 @@
 #include "board.h"
 #include "human.h"
 #include "player.h"
+#include "movevisitor.h"
+#include "movecheck.h"
+#include "movestalemate.h"
 
 
 using namespace std;
@@ -38,6 +41,44 @@ string Game::getTurn() const { return turn; }
 string Game::nextTurn() { 
 	return (turn = (turn == "white") ? "black" : "white");
 }
+
+
+void Game::updateStatus() {
+	string inCheck = check();
+//	string inCheckmate = checkmate();
+	if (inCheck != "none") { status = inCheck; }
+//	if (inCheckmate != "none") { status = inCheckmate; }
+//	if (stalemate) { status = "tie"; }
+}
+
+string Game:: getStatus() const { return status; }
+
+string Game::check() {
+	MoveCheck anyChecks(getBoard());
+	string inCheck = "none";
+	for (int col = 0; col < 8; ++col) {
+		for (int row = 0; row < 8; ++row) {
+			pair<int, int> square = make_pair(col, row);
+			auto piece = board->getPiece(square);
+			piece->acceptMove(anyChecks, square);
+			inCheck = anyChecks.checkStatus();
+			if (inCheck != "none") { break; } 
+		}
+	}
+	return inCheck;
+}
+
+string Game::checkmate() {
+	return "";
+}
+
+bool Game::stalemate() {
+	return "";
+}
+
+
+
+
 
 
 // returns piece at pos(x, y)

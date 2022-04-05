@@ -153,19 +153,28 @@ int main() {
 						}
 					}
 
-					/*//TODO determines if check, checkmate, stalemate
-					  string status = game->getStatus(); 
-					  if (status == turn) { board->undoMove(); } // TODO putting self in check
-					  else {
-					  game->display();
+					//TODO determines if check, checkmate, stalemate
+					game->updateStatus();
+					string status = game->getStatus(); 
+					if (status == turn) { // TODO putting self in check
+						game->getBoard()->undoMove(); 
+					}
+					else {
+						game->display();
 
-					  if (status == "white") { game->victor("white"); }
-					  else if (status == "black") { game->victor("black"); }
-					  else if (status == "stalemate") { game->victor("tie"); }
-					  game->nextTurn();
-					  }*/ 
-					game->display(); // remove this later
-					game->nextTurn(); //remove this later
+						if (status == "whiteChecked") { 
+							cout << "White is in check." << endl; 
+						}
+						else if (status == "blackChecked") {
+							cout << "Black is in check." << endl;
+						}
+						else if (status == "whiteWins") { game->victor("white"); }
+						else if (status == "blackWins") { game->victor("black"); }
+						else if (status == "stalemate") { game->victor("tie"); }
+						game->nextTurn();
+					} 
+					//game->display(); // TODO remove this later
+					//game->nextTurn(); // TODO remove this later
 				}
 				else {
 					cout << "Invalid Move." << endl;

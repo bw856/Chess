@@ -8,6 +8,10 @@
 #include <memory>
 #include <string> 
 
+#include "movevisitor.h"
+#include "movecheck.h"
+#include "movestalemate.h"
+
 class Player;
 class Human;
 
@@ -19,7 +23,8 @@ class Game : public Subject {
 	std::shared_ptr<Board> board;
 	bool inProgress = false;
 	std::string turn = "white"; // white is the "first" player to move
-	
+	std::string status = "none";
+
 	public:
 	Game();
 	void start();
@@ -32,10 +37,14 @@ class Game : public Subject {
 	std::shared_ptr<Player> getpBlack() const;
 	std::string getTurn() const;
 	std::string nextTurn();	
+	void updateStatus();
+	std::string getStatus() const;
+	std::string check();
+	std::string checkmate();
+	bool stalemate();
 	std::string getState(int x, int y) const;
 	void victor(std::string winner);
 	void updateOutput();
-	// TODO include functions to determine state of game: check, stalemate, checkmate
 	void display();
 	void printScore(std::string status = "");
 };
