@@ -8,7 +8,7 @@ using namespace std;
 
 MoveCheck::MoveCheck(Board &board): MoveVisitor{board} {}
 
-void MoveCheck::acceptMove(King &king, pair<int,int> coords) {
+void MoveCheck::move(King &king, pair<int,int> coords) {
 
 	// get the valid moves
 	vector<pair<int,int>> validMoves = king.validMoves(coords, board);
@@ -27,7 +27,7 @@ void MoveCheck::acceptMove(King &king, pair<int,int> coords) {
 	}
 }
 
-void MoveCheck::acceptMove(Queen &queen, pair<int,int> coords) {
+void MoveCheck::move(Queen &queen, pair<int,int> coords) {
 	vector<pair<int,int>> validMoves = queen.validMoves(coords, board);
 
 	for (pair<int,int> move_coords : validMoves) {
@@ -39,7 +39,7 @@ void MoveCheck::acceptMove(Queen &queen, pair<int,int> coords) {
 	}
 } 
 
-void MoveCheck::acceptMove(Bishop &bishop, pair<int,int> coords) {
+void MoveCheck::move(Bishop &bishop, pair<int,int> coords) {
 	vector<pair<int,int>> validMoves = bishop.validMoves(coords, board);
 
 	for (pair<int,int> move_coords : validMoves) {
@@ -51,7 +51,7 @@ void MoveCheck::acceptMove(Bishop &bishop, pair<int,int> coords) {
 	}
 }
 
-void MoveCheck::acceptMove(Knight &knight, pair<int,int> coords) {
+void MoveCheck::move(Knight &knight, pair<int,int> coords) {
 	vector<pair<int,int>> validMoves = knight.validMoves(coords, board);
 
 	for (pair<int,int> move_coords : validMoves) {
@@ -63,7 +63,7 @@ void MoveCheck::acceptMove(Knight &knight, pair<int,int> coords) {
 	}
 }
 
-void MoveCheck::acceptMove(Rook &rook, pair<int,int> coords) {
+void MoveCheck::move(Rook &rook, pair<int,int> coords) {
 	vector<pair<int,int>> validMoves = rook.validMoves(coords, board);
 
 	for (pair<int,int> move_coords : validMoves) {
@@ -75,7 +75,7 @@ void MoveCheck::acceptMove(Rook &rook, pair<int,int> coords) {
 	}
 }
 
-void MoveCheck::acceptMove(Pawn &pawn, pair<int,int> coords) { 
+void MoveCheck::move(Pawn &pawn, pair<int,int> coords) { 
 	vector<pair<int,int>> validMoves = pawn.validMoves(coords, board);
 
 	for (pair<int,int> move_coords : validMoves) {

@@ -5,7 +5,6 @@
 #include "board.h"
 #include "human.h"
 #include "player.h"
-#include "movevisitor.h"
 #include "movecheck.h"
 #include "movestalemate.h"
 
@@ -54,13 +53,12 @@ void Game::updateStatus() {
 string Game:: getStatus() const { return status; }
 
 string Game::check() {
-	MoveCheck anyChecks(getBoard());
+	MoveCheck anyChecks(*board.get());
 	string inCheck = "none";
 	for (int col = 0; col < 8; ++col) {
 		for (int row = 0; row < 8; ++row) {
-			pair<int, int> square = make_pair(col, row);
-			auto piece = board->getPiece(square);
-			piece->acceptMove(anyChecks, square);
+			shared_ptr<Piece> piece = board->getPiece(make_pair(col, row));
+			piece->acceptMove(anyChecks, make_pair(col, row));
 			inCheck = anyChecks.checkStatus();
 			if (inCheck != "none") { break; } 
 		}
@@ -73,12 +71,18 @@ string Game::checkmate() {
 }
 
 bool Game::stalemate() {
-	return "";
+	MoveStalemate anyChecks(*board.get());
+	bool inStalemate;
+	for (int col = 0; col < 8; ++col) {
+		for (int row = 0; row < 8; ++row) {
+			shared_ptr<Piece> piece = board->getPiece(make_pair(col, row));
+			piece->acceptMove(anyChecks, make_pair(col, row));
+			inStalemate = anyChecks.anyMovesLeft();
+			if (inStalemate) { break; }
+		}
+	}
+	return inStalemate;
 }
-
-
-
-
 
 
 // returns piece at pos(x, y)
