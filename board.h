@@ -1,7 +1,9 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
+#include "piece.h"
 #include <memory>
+#include <utility>
 #include <vector>
 
 class Piece;
