@@ -171,6 +171,7 @@ int main() {
 				//TODO add pieces, figure out which person plays which color side
 				string cmdSetup;
 				// note: make sure the game board is "empty" (game is not already running so every piece is a "Blank")
+				shared_ptr<Game> game = make_shared<Game>();
 				game->getBoard()->clear();
 				string curColor = "white";
 				int whiteKingCount = 0;
