@@ -25,14 +25,14 @@ vector<pair<int,int>> Queen::validMoves(pair<int,int> coords, Board &board) {
 
 	for (int i = 1; i <= BOARD_LIMIT; ++i) {
 		// possible moves for this "cycle"
-		pair<int,int> up{coords.first, coords.second + 1};
-		pair<int,int> upRight{coords.first + 1, coords.second + 1};
-		pair<int,int> upLeft{coords.first - 1, coords.second + 1};
-		pair<int,int> down{coords.first, coords.second - 1};
-		pair<int,int> downRight{coords.first + 1, coords.second - 1};
-		pair<int,int> downLeft{coords.first - 1, coords.second - 1};
-		pair<int,int> right{coords.first + 1, coords.second};
-		pair<int,int> left{coords.first - 1, coords.second};
+		pair<int,int> up{coords.first, coords.second + i};
+		pair<int,int> upRight{coords.first + i, coords.second + i};
+		pair<int,int> upLeft{coords.first - i, coords.second + i};
+		pair<int,int> down{coords.first, coords.second - i};
+		pair<int,int> downRight{coords.first + i, coords.second - i};
+		pair<int,int> downLeft{coords.first - i, coords.second - i};
+		pair<int,int> right{coords.first + i, coords.second};
+		pair<int,int> left{coords.first - i, coords.second};
 
 
 		// RIGHT: we only add them to the possible move if it's within the dimensions of the board	

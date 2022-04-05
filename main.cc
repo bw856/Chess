@@ -187,13 +187,13 @@ int main() {
 			game = make_shared<Game>(); // create a new game
 			game->getBoard()->clear();  // empty the board
 
-				// playing with two humans if using setup
-				game->setpWhite(make_shared<Human>("white"));
-				game->setpBlack(make_shared<Human>("black"));
-				
-				displays.emplace_back(make_shared<TextDisplay>(game));
-				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
-				game->display(); // display empty initial board
+			// playing with two humans if using setup
+			game->setpWhite(make_shared<Human>("white"));
+			game->setpBlack(make_shared<Human>("black"));
+
+			displays.emplace_back(make_shared<TextDisplay>(game));
+			//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+			game->display(); // display empty initial board
 
 			string nextTurn = "white";  // default initial color is white
 			int whiteKingCount = 0;
@@ -236,7 +236,7 @@ int main() {
 						game->getBoard()->setPiece(make_shared<Rook>("white", piece), coords);
 					} else if (piece == "P") {
 						game->getBoard()->setPiece(make_shared<Pawn>("white", piece), coords);
-					// black pieces
+						// black pieces
 					} else if (piece == "k") {
 						game->getBoard()->setPiece(make_shared<King>("black", piece), coords);
 					} else if (piece == "q") {
@@ -257,7 +257,7 @@ int main() {
 						cout << "Invalid Input." << endl;
 						continue;
 					}
-					
+
 					cout << "piece has been set" << endl;
 
 					// add king count, to satisfy requirement of ONE king per color
