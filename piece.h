@@ -12,6 +12,7 @@ class Piece {
 	std::string color;
 	std::string type;
 	public:
+	int moves = 0;
 	Piece(std::string color, std::string type);
 	virtual std::vector<std::pair<int,int>> validMoves(std::pair<int, int> coords, Board &b) = 0;
 	std::string getColor();

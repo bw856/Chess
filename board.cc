@@ -84,6 +84,9 @@ bool Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> 
 			pieces.first = p;
 			pieces.second = this->getPiece(new_coords);
 
+			// increasing move count by 1 since the move was successful (for the piece)
+				p->moves++;
+
 			// move the piece to new coords
 			this->setPiece(p, new_coords);
 
@@ -101,11 +104,8 @@ void Board::undoMove() {
 	this->setPiece(pieces.first, coords_pair.first);
 	this->setPiece(pieces.second, coords_pair.second);
 
-	// we have to undo the move of the piece that moved, so the "first" piece in pieces and this only occurs if it's a P/p, R/r, K/k
-	string type = pieces.first->getType();
-	if (type == "K" || type == "k" || type == "R" || type == "r" || type == "P" || type == "p") {
+	// we have to undo the move of the piece that moved
 		pieces.first->undoMove();
-	}
 }
 
 void Board::clear() {

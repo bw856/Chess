@@ -9,8 +9,8 @@
 #include <memory>
 
 class King : public Piece {
-	int moves = 0;
 	public:
+	int moves = 0;
 	King(std::string color, std::string type);
 	std::vector<std::pair<int,int>> validMoves(std::pair<int,int> coords, Board &board);
 	void acceptMove(MoveVisitor &v, std::pair<int,int> coords);

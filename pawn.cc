@@ -65,9 +65,7 @@ vector<pair<int,int>> Pawn::validMoves(pair<int,int> coords, Board &board) {
 		}
 	}
 
-	++moves;
 	return pawnMoves;
-
 }
 
 void Pawn::acceptMove(MoveVisitor &v, pair<int,int> coords) {

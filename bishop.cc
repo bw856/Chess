@@ -22,10 +22,10 @@ vector<pair<int,int>> Bishop::validMoves(pair<int,int> coords, Board &board) {
 
 	for (int i = 1; i <= BOARD_LIMIT; ++i) {
 		// possible moves for this "cycle"
-		pair<int,int> diagUpRight{coords.first + 1, coords.second + 1};
-		pair<int,int> diagUpLeft{coords.first - 1, coords.second + 1};
-		pair<int,int> diagDownRight{coords.first + 1, coords.second - 1};
-		pair<int,int> diagDownLeft{coords.first - 1, coords.second - 1};
+		pair<int,int> diagUpRight{coords.first + i, coords.second + i};
+		pair<int,int> diagUpLeft{coords.first - i, coords.second + i};
+		pair<int,int> diagDownRight{coords.first + i, coords.second - i};
+		pair<int,int> diagDownLeft{coords.first - i, coords.second - i};
 
 		// UPRIGHT: if the move is within the dimensions of the chess board (note: if it encounters a piece of opposing color, this will be the last move in this "direction")
 		if (upRightPossible && diagUpRight.first >= 0 && diagUpRight.first <= 7 && diagUpRight.second >= 0 && diagUpRight.second <= 7) {

@@ -174,7 +174,8 @@ int main() {
 						game->nextTurn();
 					} 
 					//game->display(); // TODO remove this later
-					//game->nextTurn(); // TODO remove this later
+					//game->nextTurn(); // TODO remove this later/*
+
 				}
 				else {
 					cout << "Invalid Move." << endl;
@@ -182,9 +183,7 @@ int main() {
 			}
 			else {
 				cout << "Invalid Move. Cannot move opposing piece." << endl;
-
 			}
-
 		}
 		// requires that game white-player black-player cmd is never ran
 		else if (cmd == "setup") {
