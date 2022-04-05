@@ -362,9 +362,12 @@ int main() {
 					}
 				}
 				else {
-					cout << "Invalid Command." << endl;
+					cout << "Invalid command." << endl;
 				}
 			}
+		}
+		else {
+			cout << "Invalid command." << endl;
 		}
 	}
 
