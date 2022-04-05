@@ -101,6 +101,7 @@ int main() {
 						else if (status == "stalemate") { game->victor("tie"); }
 						game->nextTurn();
 					}*/ 
+					game->display(); // remove this later
 					game->nextTurn(); //remove this later
 				}
 				else {
