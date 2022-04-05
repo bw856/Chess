@@ -28,14 +28,18 @@ int main() {
 	string cmd;
 	while (cin >> cmd) {
 		if (cmd == "game") {
-			cout << "enter game cmd" << endl;
+			cout << "enter game cmd" << endl; //TODO remove this
+
+			if (game != nullptr) { game = nullptr; }
+
 			auto createGame = make_shared<Game>();
 
 			string pWhite, pBlack;
 			bool invalid = false;
 			cin >> pWhite >> pBlack;
 
-			cout << "before assigning players" << endl;
+			cout << "before assigning players" << endl; //TODO remove this
+
 			// white player
 			if (pWhite == "human") {
 				createGame->setpWhite(make_shared<Human>("white"));
@@ -64,6 +68,8 @@ int main() {
 		else if (cmd == "resign") {
 			if (game->getTurn() == "white") { game->victor("black"); }
 			else if (game->getTurn() == "black") { game->victor("white"); }
+			game->printScore(); // display updated score after resignation
+			game->display(); // display the new game;
 		}
 		else if (cmd == "move") {
 			bool invalid = false;
@@ -85,7 +91,7 @@ int main() {
 			else { invalid = true; }
 
 			if (invalid) { 
-				cout << "Invalid Move." << endl; 
+				cout << "Invalid move input." << endl; 
 				continue;
 			}
 
@@ -112,6 +118,7 @@ int main() {
 							pawnCoords = first_coords;
 							type = "black";
 							break;
+
 						} else if (piece2 == "p" || piece2 == "P") {
 							pawnPromotion = true;
 							pawnCoords = last_coords;
@@ -140,6 +147,12 @@ int main() {
 							shared_ptr<Knight> p = make_shared<Knight>(type, newPiece);
 							game->getBoard()->setPiece(p, pawnCoords);
 						}
+						/* TODO add this
+						   else {
+						   cout << "Invalid Promotion." << endl;
+						   board->undoMove();
+						   }
+						 */
 					}
 
 					/*//TODO determines if check, checkmate, stalemate
@@ -166,145 +179,201 @@ int main() {
 			}
 
 		}
+		// requires that game white-player black-player cmd is never ran
 		else if (cmd == "setup") {
-			if (!game->started()) {
-				//TODO add pieces, figure out which person plays which color side
-				string cmdSetup;
-				// note: make sure the game board is "empty" (game is not already running so every piece is a "Blank")
-				game->getBoard()->clear();
-				string curColor = "white";
-				int whiteKingCount = 0;
-				int blackKingCount = 0;
-				// NOTE: assumes player starts inputting pieces on WHITE, if they wish to change colors, they must use the "=color" command
-				while (cin >> cmdSetup) {
-					if (cmdSetup == "+") {
-						string piece; // reads in piece type
-						char x; // reads in x-coord
-						char y; // reads in y-coord
+			// if the game is already started, exit setup cmd
+			if (game != nullptr) { continue; }
 
-						// reads in information
-						cin >> piece >> x >> y;
+			game = make_shared<Game>(); // create a new game
+			game->getBoard()->clear();  // empty the board
 
-						// convert chars x and y into pair<int,int>
-						const char CONVERT_X = 97;
-						const char CONVERT_Y = 49;
-						int x_comp = x - CONVERT_X;
-						int y_comp = y - CONVERT_Y;
+				// playing with two humans if using setup
+				game->setpWhite(make_shared<Human>("white"));
+				game->setpBlack(make_shared<Human>("black"));
+				
+				displays.emplace_back(make_shared<TextDisplay>(game));
+				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+				game->display(); // display empty initial board
 
-						pair<int,int> coords{x_comp, y_comp};
+			string nextTurn = "white";  // default initial color is white
+			int whiteKingCount = 0;
+			int blackKingCount = 0;
 
-						// Construct Piece and put piece on the board
-						if (piece == "K" || piece == "k") {
-							game->getBoard()->setPiece(make_shared<King>(curColor, piece), coords);						
-						} else if (piece == "Q" || piece == "q") {
-							game->getBoard()->setPiece(make_shared<Queen>(curColor, piece), coords);
-						} else if (piece == "B" || piece == "b") {
-							game->getBoard()->setPiece(make_shared<Bishop>(curColor, piece), coords);
-						} else if (piece == "N" || piece == "n") {
-							game->getBoard()->setPiece(make_shared<Knight>(curColor, piece), coords);
-						} else if (piece == "R" || piece == "r") {
-							game->getBoard()->setPiece(make_shared<Rook>(curColor, piece), coords);
-						} else if (piece == "P" || piece == "p") {
-							game->getBoard()->setPiece(make_shared<Pawn>(curColor, piece), coords);
-						}
+			string cmdSetup;
+			while (cin >> cmdSetup) {
+				if (cmdSetup == "+") {
+					bool invalid = false;
+					string piece; // reads in piece type
+					char xIn; // reads in x-coord (col)
+					char yIn; // reads in y-coord (row)
 
-						// add king count, this is used to satisfy requirements for ONE king per color
-						if (piece == "K") {
-							whiteKingCount++;
-						} else if (piece == "k") {
-							blackKingCount++;
-						}
+					// reads in information
+					cin >> piece >> skipws >> xIn >> yIn;
 
-						// display board after a change
-						game->display();
+					// convert chars x and y into pair<int,int>
+					const char CONVERT_X = 97;
+					const char CONVERT_Y = 49;
+					int x = xIn - CONVERT_X;
+					int y = yIn - CONVERT_Y;
+					pair<int, int> coords;
+
+					if ((0 <= x && x <= 7) || (0 <= y && y <= 7)) {  
+						coords = make_pair(x, y);
 					}
-					else if (cmdSetup == "-") {
-						char x;
-						char y;
-						cin >> x >> y;
+					else { invalid = true; }
 
-						// convert chars x and y into pair<int,int>
-						const char CONVERT_X = 97;
-						const char CONVERT_Y = 49;
-						int x_comp = x - CONVERT_X;
-						int y_comp = y - CONVERT_Y;
-
-						pair<int,int> coords{x_comp, y_comp};
-
-						// get the name of the piece at those coords
-						string piece = game->getBoard()->getPiece(coords)->getType();
-
-						// remove the piece at that position (replace it with a "Blank" piece)
-						game->getBoard()->setPiece(make_shared<Blank>(), coords);
-
-						// subtract king count (if the piece removed was a king), this is used to satisfy requirements for ONE king per color 
-						if (piece == "K") {
-							whiteKingCount--;
-						} else if (piece == "k") {
-							blackKingCount--;
-						}
-
-						// display board after a change
-						game->display();
+					// Construct Piece and put piece on the board
+					// white pieces
+					if (piece == "K") {
+						game->getBoard()->setPiece(make_shared<King>("white", piece), coords);
+					} else if (piece == "Q") {
+						game->getBoard()->setPiece(make_shared<Queen>("white", piece), coords);
+					} else if (piece == "B") {
+						game->getBoard()->setPiece(make_shared<Bishop>("white", piece), coords);
+					} else if (piece == "N") {
+						game->getBoard()->setPiece(make_shared<Knight>("white", piece), coords);
+					} else if (piece == "R") {
+						game->getBoard()->setPiece(make_shared<Rook>("white", piece), coords);
+					} else if (piece == "P") {
+						game->getBoard()->setPiece(make_shared<Pawn>("white", piece), coords);
+					// black pieces
+					} else if (piece == "k") {
+						game->getBoard()->setPiece(make_shared<King>("black", piece), coords);
+					} else if (piece == "q") {
+						game->getBoard()->setPiece(make_shared<Queen>("black", piece), coords);
+					} else if (piece == "b") {
+						game->getBoard()->setPiece(make_shared<Bishop>("black", piece), coords);
+					} else if (piece == "n") {
+						game->getBoard()->setPiece(make_shared<Knight>("black", piece), coords);
+					} else if (piece == "r") {
+						game->getBoard()->setPiece(make_shared<Rook>("black", piece), coords);
+					} else if (piece == "p") {
+						game->getBoard()->setPiece(make_shared<Pawn>("black", piece), coords);
+					} else {
+						invalid = true;
 					}
-					else if (cmdSetup == "=") {
-						// read in color and sets it to white's turn if inputted white and black's turn if black
-						string color;
-						cin >> color;
-						if (color == "white") {
-							curColor = "white";
-						} else if (color == "black") {
-							curColor = "black";
-						}
+
+					if (invalid) {
+						cout << "Invalid Input." << endl;
+						continue;
 					}
-					else if (cmdSetup == "done") {
-						bool pawnsVerified = true;
-						bool kingNotCheck = false;
+					
+					cout << "piece has been set" << endl;
 
-						// verify pawns match requirements
-						const int FIRST_ROW = 0;
-						const int LAST_ROW = 7;
-						for (int i = 0; i <= 7; i++) {
-							pair<int,int> first_coords = make_pair(i, FIRST_ROW);
-							pair<int,int> last_coords = make_pair(i, LAST_ROW);
-							auto piece1 = game->getBoard()->getPiece(first_coords)->getType();
-							auto piece2 = game->getBoard()->getPiece(last_coords)->getType();
-							if (piece1 == "p" || piece1 == "P" || piece2 == "p" || piece2 == "P") {
-								pawnsVerified = false;
-								break;
-							}
-						}
+					// add king count, to satisfy requirement of ONE king per color
+					if (piece == "K") {
+						whiteKingCount++;
+					} else if (piece == "k") {
+						blackKingCount++;
+					}
 
-						// verify kings are not checked
+					// display board after a change
+					game->display();
 
+				}
+				else if (cmdSetup == "-") {
+					char xIn;
+					char yIn;
+					cin >> skipws >> xIn >> yIn;
 
+					// convert chars x and y into pair<int,int>
+					const char CONVERT_X = 97;
+					const char CONVERT_Y = 49;
+					int x = xIn - CONVERT_X;
+					int y = yIn - CONVERT_Y;
+					pair<int, int> coords;
 
-						// verify all requirements are reached, otherwise displays error message
-						if (whiteKingCount == 0 && blackKingCount == 0 && pawnsVerified && kingNotCheck) {
+					if ((0 <= x && x <= 7) || (0 <= y && y <= 7)) {  
+						coords = make_pair(x, y);
+					}
+					else {
+						cout << "Invalid Input." << endl;
+						continue;
+					}
+
+					// get the name of the piece at those coords
+					string piece = game->getBoard()->getPiece(coords)->getType();
+
+					// remove the piece at that position (replace it with a "Blank" piece)
+					game->getBoard()->setPiece(make_shared<Blank>(), coords);
+
+					// subtract king count (if the piece removed was a king), 
+					// 	this is used to satisfy requirements for ONE king per color 
+					if (piece == "K") {
+						whiteKingCount--;
+					} else if (piece == "k") {
+						blackKingCount--;
+					}
+
+					// display board after a change
+					game->display();
+				}
+				else if (cmdSetup == "=") {
+					// sets next turn to inputted color
+					string color;
+					cin >> color;
+					if (color == "white") { nextTurn = "white"; } 
+					else if (color == "black") { nextTurn = "black"; }
+					cout << "Starting turn set to " << color << endl;
+				}
+				else if (cmdSetup == "done") {
+					bool pawnsVerified = true;
+					bool inCheck = false;
+
+					// verify pawns match requirements
+					const int FIRST_ROW = 0;
+					const int LAST_ROW = 7;
+					for (int i = 0; i <= 7; i++) {
+						pair<int,int> first_coords = make_pair(i, FIRST_ROW);
+						pair<int,int> last_coords = make_pair(i, LAST_ROW);
+						auto piece1 = game->getBoard()->getPiece(first_coords)->getType();
+						auto piece2 = game->getBoard()->getPiece(last_coords)->getType();
+						if (piece1 == "p" || piece1 == "P" || piece2 == "p" || piece2 == "P") {
+							pawnsVerified = false;
 							break;
-						} else {
-							cout << "Cannot exit setup, following errors have occurred:" << endl;
-							if (whiteKingCount > 0) {
-								cout << "More than one white king exists!" << endl;
-							}
-
-							if (blackKingCount > 0) {
-								cout << "More than one black king exists!" << endl;
-							}
-
-							if (!pawnsVerified) {
-								cout << "Pawns cannot be on the first or last row of the board!" << endl;
-							}
-
-							if (!kingNotCheck) {
-								cout << "One OR both of the king(s) are in check!" << endl;
-							}
 						}
 					}
+
+					// TODO verify kings are not checked
+					/*string status = game->getStatus(); 
+					  if (status == "white" || status == "black") { inCheck = true; }
+					 */
+
+					// verify all requirements are reached, otherwise displays error message
+					if (whiteKingCount == 1 && blackKingCount == 1 && pawnsVerified && !inCheck) {
+						// if nextTurn is set to black, move to "next turn of game" (black)
+						// 	else, defaults to start on white
+						if (nextTurn == "black") { game->nextTurn(); }
+						game->start();
+						game->display();
+						break;
+					} 
+					else {
+						cout << "Cannot exit setup, following errors have occurred:" << endl;
+						if (whiteKingCount > 1) {
+							cout << "More than one white king exists." << endl;
+						}
+
+						if (blackKingCount > 1) {
+							cout << "More than one black king exists." << endl;
+						}
+
+						if (!pawnsVerified) {
+							cout << "Pawns cannot be on the first or last row of the board." << endl;
+						}
+
+						if (inCheck) {
+							cout << "One OR both of the king(s) are in check." << endl;
+						}
+					}
+				}
+				else {
+					cout << "Invalid Command." << endl;
 				}
 			}
 		}
 	}
-	game->printScore();
+
+	game->printScore("final");
 	// TODO free any allocated memory?
 }

@@ -61,9 +61,10 @@ void Game::updateOutput() {} // TODO: check state of game - check, checkmate, st
 
 void Game::display() { notifyObservers(); }
 
-void Game::printScore() {
-	cout << "Final Score:" << endl;
+void Game::printScore(string status) {
+	if (status == "final") { cout << "Final Score:" << endl; }
 	cout << "White: " << scoreWhite << endl;
 	cout << "Black: " << scoreBlack << endl;
+	cout << "\n" << endl;
 }
 

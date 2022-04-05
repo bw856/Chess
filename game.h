@@ -37,7 +37,7 @@ class Game : public Subject {
 	void updateOutput();
 	// TODO include functions to determine state of game: check, stalemate, checkmate
 	void display();
-	void printScore();
+	void printScore(std::string status = "");
 };
 
 #endif
