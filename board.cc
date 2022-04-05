@@ -77,6 +77,13 @@ bool Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> 
 		// means we can move the piece to new_coords (cause it's a valid move)
 		if (new_coords_true) {
 
+			// store moves in pieces and coords vectors used for undo
+			coords_pair.first = coords;
+			coords_pair.second = new_coords;
+
+			pieces.first = p;
+			pieces.second = this->getPiece(new_coords);
+
 			// move the piece to new coords
 			this->setPiece(p, new_coords);
 
@@ -88,6 +95,11 @@ bool Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> 
 		}
 	}
 	return false;
+}
+
+void Board::undoMove() {
+	this->setPiece(pieces.first, coords_pair.first);
+	this->setPiece(pieces.second, coords_pair.second);
 }
 
 void Board::clear() {
