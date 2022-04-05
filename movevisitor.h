@@ -12,6 +12,7 @@
 #include <memory>
 
 class MoveVisitor {
+	protected:
 	Board &board;
 	public:
 	MoveVisitor(Board &board);

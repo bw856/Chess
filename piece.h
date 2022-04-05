@@ -15,7 +15,6 @@ class Piece {
 	Piece(std::string color, std::string type);
 	virtual std::vector<std::pair<int,int>> validMoves(std::pair<int, int> coords, Board &b) = 0;
 	std::string getColor();
-	std::pair<int, int> getPosition();
 	std::string getType();
 	// add move visitor class and ptr later
 	virtual void acceptMove(MoveVisitor &v, std::pair<int, int> coords) = 0;

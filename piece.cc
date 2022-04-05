@@ -10,8 +10,6 @@ Piece::Piece(string color, string type): color{color}, type{type} {}
 
 string Piece::getColor() { return color; }
 
-pair<int,int> Piece::getPosition() { pair<int,int> temp; return temp; }
-
 string Piece::getType() { return type; }
 
 Piece::~Piece() {}
