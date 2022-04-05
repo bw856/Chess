@@ -1,5 +1,6 @@
 #include "queen.h"
 #include "piece.h"
+#include "movevisitor.h"
 
 #include <vector>
 #include <string>
@@ -152,8 +153,10 @@ vector<pair<int,int>> Queen::validMoves(pair<int,int> coords, Board &board) {
 }
 
 void Queen::acceptMove(MoveVisitor &v, pair<int,int> coords) {
-	// v.acceptMove(*this, coords);
+	v.move(*this, coords);
 }
+
+void Queen::undoMove() {}
 
 Queen::~Queen() {}
 

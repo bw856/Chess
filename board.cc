@@ -100,6 +100,12 @@ bool Board::movePiece(shared_ptr<Piece> p, pair<int,int> coords, pair<int, int> 
 void Board::undoMove() {
 	this->setPiece(pieces.first, coords_pair.first);
 	this->setPiece(pieces.second, coords_pair.second);
+
+	// we have to undo the move of the piece that moved, so the "first" piece in pieces and this only occurs if it's a P/p, R/r, K/k
+	string type = pieces.first->getType();
+	if (type == "K" || type == "k" || type == "R" || type == "r" || type == "P" || type == "p") {
+		pieces.first->undoMove();
+	}
 }
 
 void Board::clear() {

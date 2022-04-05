@@ -13,6 +13,7 @@ class Knight : public Piece {
 	Knight(std::string color, std::string type);
 	std::vector<std::pair<int,int>> validMoves(std::pair<int,int> coords, Board &b);
 	void acceptMove(MoveVisitor &v, std::pair<int,int> coords);
+	void undoMove();
 	~Knight();
 };
 

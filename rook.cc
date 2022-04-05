@@ -1,5 +1,6 @@
 #include "rook.h"
 #include "piece.h"
+#include "movevisitor.h"
 
 #include <vector>
 #include <string>
@@ -97,8 +98,10 @@ vector<pair<int,int>> Rook::validMoves(pair<int,int> coords, Board &board) {
 }
 
 void Rook::acceptMove(MoveVisitor &v, pair<int,int> coords) {
-	//v.acceptMove(*this, coords);
+	v.move(*this, coords);
 }
+
+void Rook::undoMove() { --moves; }
 
 Rook::~Rook() {}
 

@@ -1,6 +1,7 @@
 #include "pawn.h"
 #include "board.h"
 #include "piece.h"
+#include "movevisitor.h"
 
 #include <vector>
 #include <string>
@@ -70,7 +71,9 @@ vector<pair<int,int>> Pawn::validMoves(pair<int,int> coords, Board &board) {
 }
 
 void Pawn::acceptMove(MoveVisitor &v, pair<int,int> coords) {
-	// v.acceptMove(*this, coords);
+	v.move(*this, coords);
 }
+
+void Pawn::undoMove() { --moves; }
 
 Pawn::~Pawn() {}

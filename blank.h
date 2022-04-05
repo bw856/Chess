@@ -12,6 +12,7 @@ class Blank : public Piece {
 	Blank();
 	std::vector<std::pair<int, int>> validMoves(std::pair<int,int> coords, Board &board);
 	void acceptMove(MoveVisitor &v, std::pair<int,int> coords);
+	void undoMove();
 	~Blank();
 };
 

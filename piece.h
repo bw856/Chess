@@ -18,6 +18,7 @@ class Piece {
 	std::string getType();
 	// add move visitor class and ptr later
 	virtual void acceptMove(MoveVisitor &v, std::pair<int, int> coords) = 0;
+	virtual void undoMove() = 0;
 	virtual ~Piece();
 };
 

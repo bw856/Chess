@@ -1,5 +1,6 @@
 #include "bishop.h"
 #include "piece.h"
+#include "movevisitor.h"
 
 #include <vector>
 #include <string>
@@ -90,8 +91,10 @@ vector<pair<int,int>> Bishop::validMoves(pair<int,int> coords, Board &board) {
 	return bishopMoves;
 }
 
+void Bishop::undoMove() {}
+
 void Bishop::acceptMove(MoveVisitor &v, pair<int,int> coords) {
-	// v.acceptMove(*this, coords);
+	v.move(*this, coords);
 }
 
 Bishop::~Bishop() {}

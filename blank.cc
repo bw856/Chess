@@ -18,6 +18,8 @@ void Blank::acceptMove(MoveVisitor &v, pair<int,int> coords) {
 	// no accept move because no moves
 }
 
+void Blank::undoMove() {}
+
 Blank::~Blank() {}
 
 

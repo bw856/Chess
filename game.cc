@@ -57,7 +57,10 @@ void Game::victor(string winner) {
 	resetBoard();
 }
 
-void Game::updateOutput() {} // TODO: check state of game - check, checkmate, stalemate, nothing
+void Game::updateOutput() {
+	// check state of game - check, checkmate, stalemate, nothing
+
+}
 
 void Game::display() { notifyObservers(); }
 

@@ -58,7 +58,7 @@ int main() {
 				game = createGame;
 				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
-			//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
 
@@ -147,12 +147,10 @@ int main() {
 							shared_ptr<Knight> p = make_shared<Knight>(type, newPiece);
 							game->getBoard()->setPiece(p, pawnCoords);
 						}
-						/* TODO add this
-						   else {
-						   cout << "Invalid Promotion." << endl;
-						   board->undoMove();
-						   }
-						 */
+						else {
+							cout << "Invalid Promotion." << endl;
+							game->getBoard()->undoMove();
+						}
 					}
 
 					/*//TODO determines if check, checkmate, stalemate
@@ -221,7 +219,7 @@ int main() {
 						coords = make_pair(x, y);
 					}
 					else { invalid = true; }
-					
+
 					string oldPiece = game->getBoard()->getPiece(coords)->getType();
 
 					// Construct Piece and put piece on the board
