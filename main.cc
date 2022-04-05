@@ -47,7 +47,7 @@ int main() {
 				game = createGame;
 				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
-				//displays.emplace_back(make_shared<GraphicDisplay>(game));
+				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
 
@@ -91,16 +91,16 @@ int main() {
 					//TODO check for pawn promotion
 
 					/*//TODO determines if check, checkmate, stalemate
-					string status = game->getStatus(); 
-					if (status == turn) { board->undoMove(); } // TODO putting self in check
-					else {
-						game->display();
+					  string status = game->getStatus(); 
+					  if (status == turn) { board->undoMove(); } // TODO putting self in check
+					  else {
+					  game->display();
 
-						if (status == "white") { game->victor("white"); }
-						else if (status == "black") { game->victor("black"); }
-						else if (status == "stalemate") { game->victor("tie"); }
-						game->nextTurn();
-					}*/ 
+					  if (status == "white") { game->victor("white"); }
+					  else if (status == "black") { game->victor("black"); }
+					  else if (status == "stalemate") { game->victor("tie"); }
+					  game->nextTurn();
+					  }*/ 
 					game->display(); // remove this later
 					game->nextTurn(); //remove this later
 				}
