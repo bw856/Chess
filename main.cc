@@ -82,7 +82,7 @@ int main() {
 				int r1 = pos1.back() - '1';
 				int c2 = pos2.front() - 'a';
 				int r2 = pos2.back() - '1';
-				if ((0 <= c1 && c1 <= 7) || (0 <= r1 && r1 <= 7) || (0 <= c2 && c2 <= 7) || (0 <= r2 && r2 <= 7)) {  
+				if ((0 <= c1 && c1 <= 7) && (0 <= r1 && r1 <= 7) && (0 <= c2 && c2 <= 7) && (0 <= r2 && r2 <= 7)) {  
 					start = make_pair(c1, r1);
 					end = make_pair(c2, r2);
 				}
