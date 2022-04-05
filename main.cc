@@ -58,7 +58,7 @@ int main() {
 				game = createGame;
 				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
-				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+			//	displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
 
@@ -192,7 +192,7 @@ int main() {
 			game->setpBlack(make_shared<Human>("black"));
 
 			displays.emplace_back(make_shared<TextDisplay>(game));
-			//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+			//displays.emplace_back(make_shared<GraphicDisplay>(game));
 			game->display(); // display empty initial board
 
 			string nextTurn = "white";  // default initial color is white
@@ -221,6 +221,8 @@ int main() {
 						coords = make_pair(x, y);
 					}
 					else { invalid = true; }
+					
+					string oldPiece = game->getBoard()->getPiece(coords)->getType();
 
 					// Construct Piece and put piece on the board
 					// white pieces
@@ -258,12 +260,10 @@ int main() {
 						continue;
 					}
 
-					cout << "piece has been set" << endl;
-
 					// add king count, to satisfy requirement of ONE king per color
-					if (piece == "K") {
+					if (piece == "K" && oldPiece != "K") {
 						whiteKingCount++;
-					} else if (piece == "k") {
+					} else if (piece == "k" && oldPiece != "k") {
 						blackKingCount++;
 					}
 
@@ -350,12 +350,8 @@ int main() {
 					} 
 					else {
 						cout << "Cannot exit setup, following errors have occurred:" << endl;
-						if (whiteKingCount > 1) {
-							cout << "More than one white king exists." << endl;
-						}
-
-						if (blackKingCount > 1) {
-							cout << "More than one black king exists." << endl;
+						if (whiteKingCount != 1 || blackKingCount != 1) {
+							cout << "Need exactly one of each king." << endl;
 						}
 
 						if (!pawnsVerified) {
