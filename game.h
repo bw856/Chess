@@ -13,7 +13,6 @@
 #include "movestalemate.h"
 
 class Player;
-class Human;
 
 class Game : public Subject {
 	std::shared_ptr<Player> pWhite = nullptr; // later assigned with set functions
@@ -45,7 +44,6 @@ class Game : public Subject {
 	bool stalemate();
 	std::string getState(int x, int y) const;
 	void victor(std::string winner);
-	void updateOutput();
 	void display();
 	void printScore(std::string status = "");
 };

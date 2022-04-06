@@ -1,13 +1,13 @@
 #include <memory>
 #include <utility>
 #include <iostream>
+#include <vector>
 #include "game.h"
 #include "board.h"
 #include "human.h"
 #include "player.h"
 #include "movecheck.h"
 #include "movestalemate.h"
-
 
 using namespace std;
 
@@ -17,7 +17,6 @@ void Game::start() {
 	inProgress = true; 
 	resetStatus();
 }
-
 
 bool Game::started() const { return inProgress; } 
 
@@ -47,12 +46,16 @@ string Game::nextTurn() {
 
 void Game::resetStatus() { status = "none"; }
 
-void Game::updateStatus() {
+void Game::updateStatus() {	
 	string inCheck = check();
-//	string inCheckmate = checkmate();
-	if (inCheck != "none") { status = inCheck; }
-//	if (inCheckmate != "none") { status = inCheckmate; }
-//	if (stalemate) { status = "tie"; }
+	if (stalemate()) { status = "stalemate"; }
+	if (inCheck != "none") { 
+		status = (inCheck == "white") ? "whiteChecked" : "blackChecked"; 
+		string inCheckmate = checkmate();
+		if (inCheckmate != "not") { 
+			status = (inCheckmate == "white") ? "blackWins": "whiteWins"; 
+		} 
+	}
 }
 
 string Game:: getStatus() const { return status; }
@@ -72,7 +75,58 @@ string Game::check() {
 }
 
 string Game::checkmate() {
-	return "";
+	bool mated = true; // use a contradiction
+	string kingColor, kingType;
+	if (status == "whiteChecked") {
+		kingColor = "white";
+		kingType = "K";
+	} else {
+		kingColor = "black";
+		kingType = "k";
+	}
+	pair<int, int> kingCoords;
+	vector<pair<int, int>> attackedSquares;
+
+	// get all opponent's attacked squares (valid squares of opponent)
+	for (int col = 0; col < 8; ++col) {
+		for (int row = 0; row < 8; ++row) {
+			pair<int, int> coords = make_pair(col, row);
+			auto p = board->getPiece(coords);
+			if (p->getType() != "Blank" && p->getColor() != kingColor) {
+				// concatenate all attacked moves into one vector
+				vector<pair<int, int>> attacks = p->validMoves(coords, *board);
+				attackedSquares.insert(attackedSquares.end(), attacks.begin(), attacks.end());
+			}
+			if (p->getType() == kingType && p->getColor() == kingColor) { kingCoords = coords; }
+		}
+	}
+
+	shared_ptr<Piece> king = board->getPiece(kingCoords);
+	vector<pair<int, int>> kingValid = king->validMoves(kingCoords, *board); 
+
+	// iterate over valid moves for king
+	// 	if all valid moves result in check, it is checkmate
+	for (auto coords : kingValid) {
+		bool checked = false;
+		for (auto attacked : attackedSquares) {
+			if (coords.first == attacked.first && coords.second == attacked.second) {
+				checked = true; // king's valid move is an attacked square
+				break;
+			}
+		}
+		// satisfied when all attacking squares do not overlap with this king move
+		if (!checked) { 
+			// check if moving to those coords will cause a check
+			board->movePiece(king, kingCoords, coords);
+			if (check() == kingColor) { board->undoMove(); } // causes check, keep iterating
+			else {
+				mated = false;
+				return "not";
+			}
+		}
+	}
+	if (mated) { return kingColor; }
+	return "not";
 }
 
 bool Game::stalemate() {
@@ -98,18 +152,24 @@ string Game::getState(int x, int y) const {
 
 // Allocates the resulting score of the game
 void Game::victor(string winner) {
-	if (winner == "white") { ++scoreWhite; }
-	else if (winner == "black") { ++scoreBlack; }
+	display();
+	if (winner == "white") { 
+		++scoreWhite; 
+		cout << "White wins!" << endl;
+	}
+	else if (winner == "black") { 
+		++scoreBlack;
+		cout << "Black wins!" << endl;
+	}
 	else if (winner == "tie") {
 		scoreWhite += 0.5;
 		scoreBlack += 0.5;
+		cout << "Stalemate." << endl;
 	}
+	printScore();
+	resetStatus();
 	resetBoard();
-}
-
-void Game::updateOutput() {
-	// check state of game - check, checkmate, stalemate, nothing
-
+	display();
 }
 
 void Game::display() { notifyObservers(); }

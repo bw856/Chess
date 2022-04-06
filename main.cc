@@ -28,8 +28,6 @@ int main() {
 	string cmd;
 	while (cin >> cmd) {
 		if (cmd == "game") {
-			cout << "enter game cmd" << endl; //TODO remove this
-
 			if (game != nullptr) { game = nullptr; }
 
 			auto createGame = make_shared<Game>();
@@ -37,8 +35,6 @@ int main() {
 			string pWhite, pBlack;
 			bool invalid = false;
 			cin >> pWhite >> pBlack;
-
-			cout << "before assigning players" << endl; //TODO remove this
 
 			// white player
 			if (pWhite == "human") {
@@ -58,11 +54,9 @@ int main() {
 				game = createGame;
 				game->start();
 				displays.emplace_back(make_shared<TextDisplay>(game));
-				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
+	// TODO		displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
-
-			cout << "end of game command" << endl; //TODO remove this
 
 		}
 		else if (cmd == "resign") {
@@ -101,7 +95,6 @@ int main() {
 				// move piece, return true if successful
 				bool validMove = game->getBoard()->movePiece(piece, start, end);
 				if (validMove) {
-					cout << "inside validMove" << endl; // TODO: remove this
 					// check for pawn promotion
 					bool pawnPromotion = false;
 					pair<int,int> pawnCoords;
@@ -154,32 +147,31 @@ int main() {
 						}
 					}
 
-					//TODO determines if check, checkmate, stalemate
+					// Determines if check, checkmate, stalemate
 					game->updateStatus();
 					string status = game->getStatus(); 
-					cout << "status: " << status << endl;
-					if (status == turn) { // TODO putting self in check
-						cout << "invalid: putting self in check" << endl;
+					cout << "status: " << status << endl; //TODO remove this
+					// check if putting self in check
+					bool selfCheck = (turn == "white" && status == "whiteChecked") || 
+									 (turn == "black" && status == "blackChecked");
+					if (selfCheck) { 
+						cout << "Invalid Move. " << turn << " king in check." << endl;
 						game->getBoard()->undoMove();
 						game->resetStatus();
 					}
+					else if (status == "whiteWins") { game->victor("white"); }
+					else if (status == "blackWins") { game->victor("black"); }
+					else if (status == "stalemate") { game->victor("tie"); }
 					else {
 						game->display();
-
 						if (status == "whiteChecked") { 
 							cout << "White is in check." << endl; 
 						}
 						else if (status == "blackChecked") {
 							cout << "Black is in check." << endl;
 						}
-						else if (status == "whiteWins") { game->victor("white"); }
-						else if (status == "blackWins") { game->victor("black"); }
-						else if (status == "stalemate") { game->victor("tie"); }
 						game->nextTurn();
 					} 
-					//game->display(); // TODO remove this later
-					//game->nextTurn(); // TODO remove this later/*
-
 				}
 				else {
 					cout << "Invalid Move." << endl;
@@ -202,7 +194,7 @@ int main() {
 			game->setpBlack(make_shared<Human>("black"));
 
 			displays.emplace_back(make_shared<TextDisplay>(game));
-			//displays.emplace_back(make_shared<GraphicDisplay>(game));
+	//TODO	displays.emplace_back(make_shared<GraphicDisplay>(game));
 			game->display(); // display empty initial board
 
 			string nextTurn = "white";  // default initial color is white
@@ -344,10 +336,12 @@ int main() {
 						}
 					}
 
-					// TODO verify kings are not checked
+					// check if any kings are in check
 					game->updateStatus();
 					string status = game->getStatus(); 
-					  if (status == "white" || status == "black") { inCheck = true; }
+					if (status == "whiteChecked" || status == "blackChecked" || status == "blackWins" || status == "whiteWins") { 
+						inCheck = true; 
+					}
 
 					// verify all requirements are reached, otherwise displays error message
 					if (whiteKingCount == 1 && blackKingCount == 1 && pawnsVerified && !inCheck) {
@@ -359,7 +353,6 @@ int main() {
 						break;
 					} 
 					else {
-						cout << "status: " << status << endl; //TODO
 						cout << "Cannot exit setup, following errors have occurred:" << endl;
 						if (whiteKingCount != 1 || blackKingCount != 1) {
 							cout << "Need exactly one of each king." << endl;
@@ -385,5 +378,4 @@ int main() {
 	}
 
 	game->printScore("final");
-	// TODO free any allocated memory?
 }
