@@ -24,6 +24,7 @@ int main() {
 	shared_ptr<Game> game;
 	vector<shared_ptr<Observer>> displays;
 
+
 	// command interpreter
 	string cmd;
 	while (cin >> cmd) {
