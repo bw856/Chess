@@ -25,7 +25,7 @@ shared_ptr<Board> Game::getBoard() const { return board; }
 
 void Game::resetBoard() {
 	board = make_shared<Board>();
-	turn == "white";
+	turn = "white";
 }
 
 
@@ -48,7 +48,6 @@ void Game::resetStatus() { status = "none"; }
 
 void Game::updateStatus() {	
 	string inCheck = check();
-	if (stalemate()) { status = "stalemate"; }
 	if (inCheck != "none") { 
 		status = (inCheck == "white") ? "whiteChecked" : "blackChecked"; 
 		string inCheckmate = checkmate();
@@ -56,6 +55,9 @@ void Game::updateStatus() {
 			status = (inCheckmate == "white") ? "blackWins": "whiteWins"; 
 		} 
 	}
+	cout << "checking status: " << status << endl;
+	if (stalemate()) { status = "stalemate"; }
+	cout << "checking again: " << status << endl;
 }
 
 string Game:: getStatus() const { return status; }
@@ -118,8 +120,9 @@ string Game::checkmate() {
 		if (!checked) { 
 			// check if moving to those coords will cause a check
 			board->movePiece(king, kingCoords, coords);
-			if (check() == kingColor) { board->undoMove(); } // causes check, keep iterating
-			else {
+			bool causedCheck = (check() == kingColor);
+			board->undoMove();
+			if (!causedCheck) { // causes check, keep iterating
 				mated = false;
 				return "not";
 			}
@@ -128,6 +131,43 @@ string Game::checkmate() {
 	if (mated) { return kingColor; }
 	return "not";
 }
+/*
+bool Game::stalemate() {
+	MoveStalemate anyMoves(*board);
+	for (int col = 0; col < 8; ++col) {
+		for (int row = 0; row < 8; ++row) {
+			auto piece = board->getPiece(make_pair(col, row));
+			if (turn == piece->getColor()) {
+				cout << "matched stale" << endl;
+				piece->acceptMove(anyMoves, make_pair(col, row));
+				bool movesLeft = anyMoves.anyMovesLeft();
+				if (movesLeft) return false; // has moves left, not a stalemate
+			}
+		}
+	}
+	return true;
+}
+*/
+/*
+bool Game::stalemate() {
+	MoveStalemate anyMoves(*board);
+	bool movesLeft = false;
+	for (int col = 0; col < 8; ++col) {
+		for (int row = 0; row < 8; ++row) {
+			auto piece = board->getPiece(make_pair(col, row));
+			if (piece->getColor() == turn) {
+				piece->acceptMove(anyMoves, make_pair(col, row));
+				if (anyMoves.anyMovesLeft()) { 
+					movesLeft = true;
+					break; 
+				}
+			}
+		}
+		if (movesLeft) break;
+	}
+	return !movesLeft;
+}
+*/
 
 bool Game::stalemate() {
 	MoveStalemate anyChecks(*board);
@@ -142,7 +182,6 @@ bool Game::stalemate() {
 	}
 	return inStalemate;
 }
-
 
 // returns piece at pos(x, y)
 string Game::getState(int x, int y) const { 

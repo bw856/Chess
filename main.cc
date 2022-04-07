@@ -48,7 +48,6 @@ int main() {
 			} 
 			else { invalid = true; }
 
-			cout << "assigned players" << endl;
 			// no invalid players > create and start a new game
 			if (!invalid) {
 				game = createGame;
@@ -66,6 +65,7 @@ int main() {
 			game->display(); // display the new game;
 		}
 		else if (cmd == "move") {
+			cout << "status: " << game->getStatus() << endl;
 			bool invalid = false;
 			string pos1, pos2;
 			cin >> pos1 >> pos2;
@@ -149,8 +149,8 @@ int main() {
 
 					// Determines if check, checkmate, stalemate
 					game->updateStatus();
-					string status = game->getStatus(); 
-					cout << "status: " << status << endl; //TODO remove this
+					string status = game->getStatus();
+					cout << "updated status: " << status << endl;
 					// check if putting self in check
 					bool selfCheck = (turn == "white" && status == "whiteChecked") || 
 									 (turn == "black" && status == "blackChecked");
@@ -161,7 +161,9 @@ int main() {
 					}
 					else if (status == "whiteWins") { game->victor("white"); }
 					else if (status == "blackWins") { game->victor("black"); }
-					else if (status == "stalemate") { game->victor("tie"); }
+					else if (status == "stalemate") { 
+						cout << "enter stalemate" << endl;
+						game->victor("tie"); }
 					else {
 						game->display();
 						if (status == "whiteChecked") { 
