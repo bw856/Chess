@@ -38,5 +38,5 @@ void TextDisplay::notify() {
 
 	cout << "  ";
 	for (char letter = 'a'; letter <= 'h'; ++letter) cout << letter;
-	cout << endl;
+	cout << "\n" << endl;
 }

@@ -28,8 +28,6 @@ int main() {
 	string cmd;
 	while (cin >> cmd) {
 		if (cmd == "game") {
-			cout << "enter game cmd" << endl; //TODO remove this
-
 			if (game != nullptr) { game = nullptr; }
 
 			auto createGame = make_shared<Game>();
@@ -37,8 +35,6 @@ int main() {
 			string pWhite, pBlack;
 			bool invalid = false;
 			cin >> pWhite >> pBlack;
-
-			cout << "before assigning players" << endl; //TODO remove this
 
 			// white player
 			if (pWhite == "human") {
@@ -52,7 +48,6 @@ int main() {
 			} 
 			else { invalid = true; }
 
-			cout << "assigned players" << endl;
 			// no invalid players > create and start a new game
 			if (!invalid) {
 				game = createGame;
@@ -61,8 +56,6 @@ int main() {
 				//	displays.emplace_back(make_shared<GraphicDisplay>(game));
 				game->display();
 			}
-
-			cout << "end of game command" << endl; //TODO remove this
 
 		}
 		else if (cmd == "resign") {
@@ -101,7 +94,6 @@ int main() {
 				// move piece, return true if successful
 				bool validMove = game->getBoard()->movePiece(piece, start, end);
 				if (validMove) {
-					cout << "inside validMove" << endl; // TODO: remove this
 					// check for pawn promotion
 					bool pawnPromotion = false;
 					pair<int,int> pawnCoords;
@@ -154,10 +146,10 @@ int main() {
 						}
 					}
 
-					//TODO determines if check, checkmate, stalemate
+					// TODO determines if check, checkmate, stalemate
 					game->updateStatus();
 					string status = game->getStatus(); 
-					cout << "status: " << status << endl;
+					// cout << "status: " << status << endl;
 					if (status == turn) { // TODO putting self in check
 						cout << "invalid: putting self in check" << endl;
 						game->getBoard()->undoMove();
@@ -177,9 +169,6 @@ int main() {
 						else if (status == "stalemate") { game->victor("tie"); }
 						game->nextTurn();
 					} 
-					//game->display(); // TODO remove this later
-					//game->nextTurn(); // TODO remove this later/*
-
 				}
 				else {
 					cout << "Invalid Move." << endl;
@@ -359,7 +348,7 @@ int main() {
 						break;
 					} 
 					else {
-						cout << "status: " << status << endl; //TODO
+						// cout << "status: " << status << endl; //TODO
 						cout << "Cannot exit setup, following errors have occurred:" << endl;
 						if (whiteKingCount != 1 || blackKingCount != 1) {
 							cout << "Need exactly one of each king." << endl;
