@@ -1,5 +1,5 @@
-cs246 a5 final project - chess
+An implentation of Chess using Object-Oriented Programming
 
-Partners:
-Brandon Wang, 
+Collaboration between:
+Brandon Wang
 David Liu
