@@ -16,7 +16,6 @@
 #include "blank.h"
 #include "observer.h"
 #include "textDisplay.h"
-#include "graphicDisplay.h"
 
 using namespace std;
 

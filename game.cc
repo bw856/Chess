@@ -26,7 +26,7 @@ shared_ptr<Board> Game::getBoard() const { return board; }
 
 void Game::resetBoard() {
 	board = make_shared<Board>();
-	turn == "white";
+	turn = "white";
 }
 
 
